@@ -81,7 +81,6 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                       title: const Text('Disponible'),
                       value: formValues['disponible'],
                       onChanged: (value) {
-                        print('Checkbox value: $value');
                         _checkDisponible = value;
                         formValues['disponible'] = _checkDisponible;
                         setState(() {});
@@ -91,7 +90,7 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                     Container(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(children: [
-                        Align(
+                        const Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
                             padding: EdgeInsets.only(left: 12.0, bottom: 8.0),
@@ -100,7 +99,7 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                           ),
                         ),
                         RadioListTile(
-                          dense: true, // Makes the tiles a bit more compact
+                          dense: true, // Que sean más compactos.
                           title: const Text('Ninguno'),
                           value: 'Ninguno',
                           groupValue: tipoDescuento,
@@ -165,7 +164,6 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                     const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
-                        // FocusScope.of(context).requestFocus(FocusNode());
                         if (!formKey.currentState!.validate()) {
                           print('Formulario no validado!');
                           return;
