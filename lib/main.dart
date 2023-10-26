@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:producto_cliente/routes/app_routes.dart';
+import 'package:producto_cliente/theme/app_theme.dart';
 
 void main() => runApp(const Tienda());
 
@@ -14,7 +15,7 @@ class Tienda extends StatelessWidget {
       initialRoute: AppRoutes.initialRoute,
       routes: AppRoutes.getAppRoutes(),
       onGenerateRoute: AppRoutes.onGenerateRoute, // 1.
-      theme: ThemeData.light(),
+      theme: AppTheme.lightTheme,
     );
   }
 }

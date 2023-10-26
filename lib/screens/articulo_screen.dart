@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/custom_dropdownbox.dart';
 import '../widgets/custom_textformfield.dart';
 
 class ArticuloScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
     'categoria': '',
   };
 
-  late final String _idPlaceholder = 'ID ' + formValues['id'];
+  late final String _idPlaceholder = 'ID # ' + formValues['id'];
   bool _checkDisponible = false;
   String tipoDescuento = 'Ninguno';
   num valorDescuento = 0;
@@ -43,38 +44,39 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                 key: formKey,
                 child: Column(
                   children: [
-                    TextFormField(
+                    TextField(
                       enabled: false,
-                      initialValue: _idPlaceholder,
+                      controller: TextEditingController(text: _idPlaceholder),
                     ),
+                    const SizedBox(height: 30),
                     CustomTextFormField(
                         hintText: 'Código',
                         labelText: 'Código',
                         icon: Icons.qr_code_2_sharp,
                         propertyName: 'codigo',
                         propertyValues: formValues),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 15),
                     CustomTextFormField(
                         hintText: 'Descripción',
                         labelText: 'Descripción',
                         icon: Icons.description_outlined,
                         propertyName: 'descripcion',
                         propertyValues: formValues),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 15),
                     CustomTextFormField(
                         hintText: 'Precio',
                         labelText: 'Precio',
                         icon: Icons.monetization_on_sharp,
                         propertyName: 'precio',
                         propertyValues: formValues),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 15),
                     CustomTextFormField(
                         hintText: 'Existencia',
                         labelText: 'Existencia',
                         icon: Icons.format_list_numbered,
                         propertyName: 'existencia',
                         propertyValues: formValues),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 15),
                     SwitchListTile(
                       title: const Text('Disponible'),
                       value: formValues['disponible'],
@@ -85,20 +87,20 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                         setState(() {});
                       },
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
                       child: Column(children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 12.0, bottom: 8.0),
-                          child: Text('Tipo de Descuento',
-                              style: TextStyle(fontSize: 16)),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 12.0, bottom: 8.0),
+                            child: Text('Tipo de Descuento',
+                                style: TextStyle(fontSize: 16)),
+                          ),
                         ),
                         RadioListTile(
+                          dense: true, // Makes the tiles a bit more compact
                           title: const Text('Ninguno'),
                           value: 'Ninguno',
                           groupValue: tipoDescuento,
@@ -109,6 +111,7 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                           },
                         ),
                         RadioListTile(
+                          dense: true,
                           title: const Text('Promoción'),
                           value: 'Promoción',
                           groupValue: tipoDescuento,
@@ -119,6 +122,7 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                           },
                         ),
                         RadioListTile(
+                          dense: true,
                           title: const Text('Directo'),
                           value: 'Directo',
                           groupValue: tipoDescuento,
@@ -130,20 +134,26 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                         ),
                       ]),
                     ),
-                    const SizedBox(height: 10),
-                    DropdownButtonFormField(
+                    const SizedBox(height: 15),
+                    CustomDropdownBox<num>(
+                      hintText: 'Descuento',
+                      labelText: 'Seleccione un valor de descuento',
+                      icon: Icons.percent,
+                      propertyName: 'valor_descuento',
+                      propertyValues: formValues,
                       items: const [
                         DropdownMenuItem(value: 0, child: Text('0')),
                         DropdownMenuItem(value: 0.04, child: Text('0.04')),
                         DropdownMenuItem(value: 0.07, child: Text('0.07')),
                       ],
-                      onChanged: (value) {
-                        valorDescuento = value ?? 0;
-                        formValues['valor_descuento'] = valorDescuento;
-                      },
                     ),
-                    const SizedBox(height: 10),
-                    DropdownButtonFormField(
+                    const SizedBox(height: 15),
+                    CustomDropdownBox<String>(
+                      hintText: 'Categoría',
+                      labelText: 'Seleccione una categoría',
+                      icon: Icons.category,
+                      propertyName: 'categoria',
+                      propertyValues: formValues,
                       items: const [
                         DropdownMenuItem(value: 'Ropa', child: Text('Ropa')),
                         DropdownMenuItem(
@@ -151,10 +161,6 @@ class _ArticuloScreenState extends State<ArticuloScreen> {
                         DropdownMenuItem(
                             value: 'Zapatos', child: Text('Zapatos')),
                       ],
-                      onChanged: (value) {
-                        categoria = value ?? '-';
-                        formValues['categoria'] = categoria;
-                      },
                     ),
                     const SizedBox(height: 30),
                     ElevatedButton(
